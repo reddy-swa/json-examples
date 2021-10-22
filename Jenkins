@@ -5,24 +5,20 @@ pipeline {
         dockerImage = '' 
     }
     
-    agent any
-    
+    agent any    
     tools{nodejs "node"}
-    
     stages{
-        stage("Cloning our Git"){
+        stage("npm build"){
           steps{
-             git 'https://github.com/reddy-swa/json-examples.git'
+             
              sh "npm install"
-            }
+            }       
         }
-         stage("Building Docker Image"){
+      stage("Building Docker Image"){
             steps{
                script{
-                 dockerImage = docker.build registry + "Mynode:$BUILD_NUMBER"
+                 dockerImage = docker.build registry + ":$BRANCH_NAME-$BUILD_NUMBER"
                }
             }
         }
-        
-    }   
 }
