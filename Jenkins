@@ -9,11 +9,12 @@ pipeline {
     tools{nodejs "node"}
     stages{
         stage("npm build"){
-          steps{
+            steps{
              
              sh "npm install"
             }       
         }
+    
       stage("Building Docker Image"){
             steps{
                script{
@@ -21,4 +22,5 @@ pipeline {
                }
             }
         }
+   }
 }
