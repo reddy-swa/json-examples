@@ -1,0 +1,28 @@
+pipeline {
+   environment { 
+        registry = "reddyswa/alpine" 
+        registryCredential = 'reddyswa' 
+        dockerImage = '' 
+    }
+    
+    agent any
+    
+    tools{nodejs "node"}
+    
+    stages{
+        stage("Cloning our Git"){
+          steps{
+             git 'https://github.com/reddy-swa/json-examples.git'
+             sh "npm install"
+            }
+        }
+         stage("Building Docker Image"){
+            steps{
+               script{
+                 dockerImage = docker.build registry + "Mynode:$BUILD_NUMBER"
+               }
+            }
+        }
+        
+    }   
+}
